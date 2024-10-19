@@ -131,8 +131,10 @@ int main(void)
     //                                                            // JPEG loader
 
     // ****************************************************************
+    // GLuint Texture =
+    //     loadBMP_custom("Stone_Chess_Board/12951_Stone_Chess_Board_bump.bmp");
     GLuint Texture =
-        loadBMP_custom("Stone_Chess_Board/12951_Stone_Chess_Board_bump.bmp");
+        loadDDS("Stone_Chess_Board/12951_Stone_Chess_Board_diff.dds");
     // Get a handle for our "myTextureSampler" uniform
     GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
 

@@ -141,9 +141,11 @@ bool loadAssImp(const char* path, std::vector<unsigned short>& indices,
 {
 
     Assimp::Importer importer;
-
-    const aiScene* scene = importer.ReadFile(
-        path, 0 /*aiProcess_JoinIdenticalVertices | aiProcess_SortByPType*/);
+    const aiScene* scene =
+        importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs |
+                                    aiProcess_CalcTangentSpace);
+    // const aiScene* scene = importer.ReadFile(
+    //     path, 0 /*aiProcess_JoinIdenticalVertices | aiProcess_SortByPType*/);
     if (!scene)
     {
         fprintf(stderr, importer.GetErrorString());
