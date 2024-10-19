@@ -102,8 +102,7 @@ int main(void)
 
     // ****************************************************************
     // Load the texture for the chessboard
-    GLuint Texture = loadBMP_custom(
-        "Stone_Chess_Board/12951_Stone_Chess_Board_diff.bmp"); // or use
+    // or use
 
     // // Read our .obj file for the chessboard
     // std::vector<unsigned short> boardIndices;
@@ -132,7 +131,8 @@ int main(void)
     //                                                            // JPEG loader
 
     // ****************************************************************
-
+    GLuint Texture =
+        loadBMP_custom("Stone_Chess_Board/12951_Stone_Chess_Board_bump.bmp");
     // Get a handle for our "myTextureSampler" uniform
     GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
 
