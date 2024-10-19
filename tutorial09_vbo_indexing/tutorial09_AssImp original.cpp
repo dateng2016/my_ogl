@@ -171,12 +171,7 @@ int main(void)
         computeMatricesFromInputs();
         glm::mat4 ProjectionMatrix = getProjectionMatrix();
         glm::mat4 ViewMatrix = getViewMatrix();
-        float scaleFactor = 0.01f; // Scale factor for all axes
-        glm::mat4 ModelMatrix = glm::scale(
-            glm::mat4(1.0), glm::vec3(scaleFactor, scaleFactor, scaleFactor));
-
-        // glm::mat4 ModelMatrix = glm::mat4(1.0);
-
+        glm::mat4 ModelMatrix = glm::mat4(1.0);
         glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
         // Send our transformation to the currently bound shader,
