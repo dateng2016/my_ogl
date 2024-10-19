@@ -98,7 +98,40 @@ int main(void)
     GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
 
     // Load the texture
-    GLuint Texture = loadDDS("uvmap.DDS");
+    // GLuint Texture = loadDDS("uvmap.DDS");
+
+    // ****************************************************************
+    // Load the texture for the chessboard
+    GLuint Texture = loadBMP_custom(
+        "Stone_Chess_Board/12951_Stone_Chess_Board_diff.bmp"); // or use
+
+    // // Read our .obj file for the chessboard
+    // std::vector<unsigned short> boardIndices;
+    // std::vector<glm::vec3> boardVertices;
+    // std::vector<glm::vec2> boardUVs;
+    // std::vector<glm::vec3> boardNormals;
+
+    // bool resBoard =
+    //     loadAssImp("Stone_Chess_Board/12951_Stone_Chess_Board_v1_L3.obj",
+    //                boardIndices, boardVertices, boardUVs, boardNormals);
+    // if (!resBoard)
+    // {
+    //     fprintf(stderr, "Failed to load chessboard model\n");
+    //     return -1;
+    // }
+
+    // // // Load the texture for the chessboard
+    // // GLuint boardTexture =
+    // //     loadDDS("Stone_Chess_Board/12951_Stone_Chess_Board_diff.dds");
+
+    // // Load the texture for the chessboard
+    // GLuint boardTexture = loadBMP_custom(
+    //     "Stone_Chess_Board/12951_Stone_Chess_Board_diff.jpg"); // or use
+    //                                                            // loadJPEG if
+    //                                                            // you have a
+    //                                                            // JPEG loader
+
+    // ****************************************************************
 
     // Get a handle for our "myTextureSampler" uniform
     GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
@@ -108,8 +141,17 @@ int main(void)
     std::vector<glm::vec3> indexed_vertices;
     std::vector<glm::vec2> indexed_uvs;
     std::vector<glm::vec3> indexed_normals;
-    bool res = loadAssImp("suzanne.obj", indices, indexed_vertices, indexed_uvs,
-                          indexed_normals);
+    // bool res = loadAssImp("suzanne.obj", indices, indexed_vertices,
+    // indexed_uvs,
+    //                       indexed_normals);
+
+    // ****************************************************************
+
+    bool res =
+        loadAssImp("Stone_Chess_Board/12951_Stone_Chess_Board_v1_L3.obj",
+                   indices, indexed_vertices, indexed_uvs, indexed_normals);
+
+    // ****************************************************************
 
     // Load it into a VBO
 
