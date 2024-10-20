@@ -97,8 +97,8 @@ int main(void)
     GLuint ViewMatrixID = glGetUniformLocation(programID, "V");
     GLuint ModelMatrixID = glGetUniformLocation(programID, "M");
 
-    // GLuint Texture =
-    //     loadDDS("Stone_Chess_Board/12951_Stone_Chess_Board_diff.dds");
+    GLuint Texture =
+        loadDDS("Stone_Chess_Board/12951_Stone_Chess_Board_diff.dds");
     // Get a handle for our "myTextureSampler" uniform
     GLuint TextureID = glGetUniformLocation(programID, "myTextureSampler");
 
@@ -214,71 +214,70 @@ int main(void)
         computeMatricesFromInputs();
         glm::mat4 ProjectionMatrix = getProjectionMatrix();
         glm::mat4 ViewMatrix = getViewMatrix();
-        // // glm::mat4 ModelMatrix = glm::mat4(1.0);
-        // float scaleFactor = 0.1f; // Scale factor for all axes
-        // glm::mat4 ModelMatrix = glm::scale(
-        //     glm::mat4(1.0), glm::vec3(scaleFactor, scaleFactor,
-        //     scaleFactor));
-        glm::mat4 MVP;
-        // glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
+        // glm::mat4 ModelMatrix = glm::mat4(1.0);
+        float scaleFactor = 0.1f; // Scale factor for all axes
+        glm::mat4 ModelMatrix = glm::scale(
+            glm::mat4(1.0), glm::vec3(scaleFactor, scaleFactor, scaleFactor));
 
-        // // Send our transformation to the currently bound shader,
-        // // in the "MVP" uniform
-        // glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-        // glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
-        // glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+        glm::mat4 MVP = ProjectionMatrix * ViewMatrix * ModelMatrix;
 
-        // glm::vec3 lightPos = glm::vec3(0, 0, 6);
-        // glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
+        // Send our transformation to the currently bound shader,
+        // in the "MVP" uniform
+        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+        glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix[0][0]);
+        glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
 
-        // // Bind our texture in Texture Unit 0
-        // glActiveTexture(GL_TEXTURE0);
-        // glBindTexture(GL_TEXTURE_2D, Texture);
-        // // Set our "myTextureSampler" sampler to use Texture Unit 0
-        // glUniform1i(TextureID, 0);
+        glm::vec3 lightPos = glm::vec3(0, 0, 6);
+        glUniform3f(LightID, lightPos.x, lightPos.y, lightPos.z);
 
-        // // 1rst attribute buffer : vertices
-        // glEnableVertexAttribArray(0);
-        // glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
-        // glVertexAttribPointer(0,        // attribute
-        //                       3,        // size
-        //                       GL_FLOAT, // type
-        //                       GL_FALSE, // normalized?
-        //                       0,        // stride
-        //                       (void*)0  // array buffer offset
-        // );
+        // Bind our texture in Texture Unit 0
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, Texture);
+        // Set our "myTextureSampler" sampler to use Texture Unit 0
+        glUniform1i(TextureID, 0);
 
-        // // 2nd attribute buffer : UVs
-        // glEnableVertexAttribArray(1);
-        // glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
-        // glVertexAttribPointer(1,        // attribute
-        //                       2,        // size
-        //                       GL_FLOAT, // type
-        //                       GL_FALSE, // normalized?
-        //                       0,        // stride
-        //                       (void*)0  // array buffer offset
-        // );
+        // 1rst attribute buffer : vertices
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer);
+        glVertexAttribPointer(0,        // attribute
+                              3,        // size
+                              GL_FLOAT, // type
+                              GL_FALSE, // normalized?
+                              0,        // stride
+                              (void*)0  // array buffer offset
+        );
 
-        // // 3rd attribute buffer : normals
-        // glEnableVertexAttribArray(2);
-        // glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
-        // glVertexAttribPointer(2,        // attribute
-        //                       3,        // size
-        //                       GL_FLOAT, // type
-        //                       GL_FALSE, // normalized?
-        //                       0,        // stride
-        //                       (void*)0  // array buffer offset
-        // );
+        // 2nd attribute buffer : UVs
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, uvbuffer);
+        glVertexAttribPointer(1,        // attribute
+                              2,        // size
+                              GL_FLOAT, // type
+                              GL_FALSE, // normalized?
+                              0,        // stride
+                              (void*)0  // array buffer offset
+        );
 
-        // // Index buffer
-        // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+        // 3rd attribute buffer : normals
+        glEnableVertexAttribArray(2);
+        glBindBuffer(GL_ARRAY_BUFFER, normalbuffer);
+        glVertexAttribPointer(2,        // attribute
+                              3,        // size
+                              GL_FLOAT, // type
+                              GL_FALSE, // normalized?
+                              0,        // stride
+                              (void*)0  // array buffer offset
+        );
 
-        // // Draw the triangles !
-        // glDrawElements(GL_TRIANGLES,      // mode
-        //                indices.size(),    // count
-        //                GL_UNSIGNED_SHORT, // type
-        //                (void*)0           // element array buffer offset
-        // );
+        // Index buffer
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer);
+
+        // Draw the triangles !
+        glDrawElements(GL_TRIANGLES,      // mode
+                       indices.size(),    // count
+                       GL_UNSIGNED_SHORT, // type
+                       (void*)0           // element array buffer offset
+        );
 
         // *********************************************************************************
         // WORK ON THE SECOND OBJECT
@@ -288,9 +287,10 @@ int main(void)
         // glm::mat4 ModelMatrix2 = glm::translate(
         //     glm::mat4(1.0),
         //     glm::vec3(2.0f, 0.0f, 0.0f)); // Translate to the right
-        double scaleFactor = 0.001;
-        glm::mat4 ModelMatrix2 = glm::scale(
-            glm::mat4(1.0), glm::vec3(scaleFactor, scaleFactor, scaleFactor));
+        double scaleFactor2 = 0.001;
+        glm::mat4 ModelMatrix2 =
+            glm::scale(glm::mat4(1.0),
+                       glm::vec3(scaleFactor2, scaleFactor2, scaleFactor2));
         MVP = ProjectionMatrix * ViewMatrix * ModelMatrix2;
 
         glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
