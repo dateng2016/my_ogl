@@ -174,8 +174,9 @@ int main(void)
                  indices2.size() * sizeof(unsigned short), &indices2[0],
                  GL_STATIC_DRAW);
 
-    GLuint Texture2 = loadDDS("Chess_New/wooddark0.dds");
-    // GLuint Texture2 = loadBMP_custom("Chess_New/woodlig1.bmp");
+    // GLuint Texture2 = loadDDS("Chess_New/wooddark5.dds");
+
+    GLuint Texture2 = loadBMP_custom("Chess_New/wooddar3.bmp");
     // Get a handle for our "myTextureSampler" uniform
     GLuint TextureID2 = glGetUniformLocation(programID, "myTextureSampler");
 
