@@ -147,7 +147,8 @@ int main(void)
     std::vector<glm::vec2> indexed_uvs2;
     std::vector<glm::vec3> indexed_normals2;
 
-    bool res2 = loadAssImp("Chess_New/chess.obj", indices2, indexed_vertices2,
+    bool res2 =
+        loadAssImpMultiple("Chess_New/chess.obj", indices2, indexed_vertices2,
                            indexed_uvs2, indexed_normals2);
 
     // Load it into a VBO
