@@ -198,10 +198,11 @@ bool loadAssImp(const char* path, std::vector<unsigned short>& indices,
     return true;
 }
 
-bool loadAssImpMultiple(const char* path, std::vector<unsigned short>& indices,
-                        std::vector<glm::vec3>& vertices,
-                        std::vector<glm::vec2>& uvs,
-                        std::vector<glm::vec3>& normals)
+bool loadAssImpMultiple(const char* path,
+                        vector<std::vector<unsigned short>>& indices,
+                        vector<std::vector<glm::vec3>>& vertices,
+                        vector<std::vector<glm::vec2>>& uvs,
+                        vector<std::vector<glm::vec3>>& normals)
 {
 
     Assimp::Importer importer;
@@ -217,11 +218,9 @@ bool loadAssImpMultiple(const char* path, std::vector<unsigned short>& indices,
         return false;
     }
 
-    // TODO: Note that scene->mMeshes contains all the meshes that we are
-    // interested in
-    // mesh->mNumVertices is the number of vertices for ONE mesh
+    /
 
-    const aiMesh* mesh =
+        const aiMesh* mesh =
         scene->mMeshes[0]; // In this simple example code we always use the 1rst
                            // mesh (in OBJ files there is often only one anyway)
 

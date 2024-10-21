@@ -21,6 +21,7 @@ using namespace std;
 #include <common/shader.hpp>
 #include <common/texture.hpp>
 #include <common/vboindexer.hpp>
+using namespace std;
 
 int main(void)
 {
@@ -141,15 +142,37 @@ int main(void)
                  GL_STATIC_DRAW);
 
     //  **********************************************************
-    // EXPERIMENT ON THE CHESS PIECES
-    std::vector<unsigned short> indices2;
-    std::vector<glm::vec3> indexed_vertices2;
-    std::vector<glm::vec2> indexed_uvs2;
-    std::vector<glm::vec3> indexed_normals2;
 
-    bool res2 =
-        loadAssImpMultiple("Chess_New/chess.obj", indices2, indexed_vertices2,
-                           indexed_uvs2, indexed_normals2);
+    //    There are 12 meshes in the .obj file. We need vectors of size 12 of
+    //    vectors to contain all the informations
+    // * NOTE that each of the vectors below contains 12 vectors
+    vector<vector<unsigned short>> chessIndices;
+    vector<vector<glm::vec3>> chessIndexedVertices;
+    vector<vector<glm::vec2>> chessIndexedUvs;
+    vector<vector<glm::vec3>> chessIndexedNormals;
+
+    // std::vector<unsigned short> indices2;
+    // std::vector<glm::vec3> indexed_vertices2;
+    // std::vector<glm::vec2> indexed_uvs2;
+    // std::vector<glm::vec3> indexed_normals2;
+
+    bool res2 = loadAssImpMultiple("Chess_New/chess.obj", chessIndices,
+                                   chessIndexedVertices, chessIndexedUvs,
+                                   chessIndexedNormals);
+
+    // *Here are the names of the 12 objects
+    // ALFIERE02
+    // ALFIERE3
+    // Object02
+    // Object3
+    // PEDONE12
+    // PEDONE13
+    // RE01
+    // RE2
+    // REGINA01
+    // REGINA2
+    // TORRE02
+    // TORRE3
 
     // Load it into a VBO
     GLuint vertexbuffer2, uvbuffer2, normalbuffer2, elementbuffer2;
