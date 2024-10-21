@@ -175,31 +175,69 @@ int main(void)
     // TORRE3
 
     // Load it into a VBO
-    GLuint vertexbuffer2, uvbuffer2, normalbuffer2, elementbuffer2;
+    // GLuint vertexbuffer2, uvbuffer2, normalbuffer2, elementbuffer2;
+    vector<GLuint> chessVertexBuffers, chessUvBuffers, chessNomralBuffers,
+        chessElementBuffers;
+    for (int i = 0; i < 12; i++)
+    {
+        GLuint chessVertexBuffer, chessUvBuffer, chessNomralBuffer,
+            chessElementBuffer;
+        chessVertexBuffers.push_back(chessVertexBuffer);
+        chessUvBuffers.push_back(chessUvBuffer);
+        chessNomralBuffers.push_back(chessUvBuffer);
+        chessElementBuffers.push_back(chessElementBuffer);
+    }
+    for (int i = 0; i < 12; i++)
+    {
+        glGenBuffers(1, &chessVertexBuffers[i]);
+        glBindBuffer(GL_ARRAY_BUFFER, chessVertexBuffers[i]);
+        glBufferData(GL_ARRAY_BUFFER,
+                     chessIndexedVertices[i].size() * sizeof(glm::vec3),
+                     &chessIndexedVertices[i][0], GL_STATIC_DRAW);
 
-    glGenBuffers(1, &vertexbuffer2);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-    glBufferData(GL_ARRAY_BUFFER,
-                 chessIndexedVertices[0].size() * sizeof(glm::vec3), // FIXME:
-                 &chessIndexedVertices[0][0], GL_STATIC_DRAW);
+        glGenBuffers(1, &chessUvBuffers[i]);
+        glBindBuffer(GL_ARRAY_BUFFER, chessUvBuffers[i]);
+        glBufferData(GL_ARRAY_BUFFER,
+                     chessIndexedUvs[i].size() * sizeof(glm::vec2), // FIXME:
+                     &chessIndexedUvs[i][0], GL_STATIC_DRAW);
 
-    glGenBuffers(1, &uvbuffer2);
-    glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
-    glBufferData(GL_ARRAY_BUFFER,
-                 chessIndexedUvs[0].size() * sizeof(glm::vec2), // FIXME:
-                 &chessIndexedUvs[0][0], GL_STATIC_DRAW);
+        glGenBuffers(1, &chessNomralBuffers[i]);
+        glBindBuffer(GL_ARRAY_BUFFER, chessNomralBuffers[i]);
+        glBufferData(GL_ARRAY_BUFFER,
+                     chessIndexedNormals[i].size() *
+                         sizeof(glm::vec3), // FIXME:
+                     &chessIndexedNormals[i][0], GL_STATIC_DRAW);
 
-    glGenBuffers(1, &normalbuffer2);
-    glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
-    glBufferData(GL_ARRAY_BUFFER,
-                 chessIndexedNormals[0].size() * sizeof(glm::vec3), // FIXME:
-                 &chessIndexedNormals[0][0], GL_STATIC_DRAW);
+        glGenBuffers(1, &chessElementBuffers[i]);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
+        glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                     chessIndices[i].size() * sizeof(unsigned short), // FIXME:
+                     &chessIndices[i][0], GL_STATIC_DRAW);
+    }
 
-    glGenBuffers(1, &elementbuffer2);
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer2);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                 chessIndices[0].size() * sizeof(unsigned short), // FIXME:
-                 &chessIndices[0][0], GL_STATIC_DRAW);
+    // glGenBuffers(1, &vertexbuffer2);
+    // glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
+    // glBufferData(GL_ARRAY_BUFFER,
+    //              chessIndexedVertices[0].size() * sizeof(glm::vec3), //
+    //              FIXME: &chessIndexedVertices[0][0], GL_STATIC_DRAW);
+
+    // glGenBuffers(1, &uvbuffer2);
+    // glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
+    // glBufferData(GL_ARRAY_BUFFER,
+    //              chessIndexedUvs[0].size() * sizeof(glm::vec2), // FIXME:
+    //              &chessIndexedUvs[0][0], GL_STATIC_DRAW);
+
+    // glGenBuffers(1, &normalbuffer2);
+    // glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
+    // glBufferData(GL_ARRAY_BUFFER,
+    //              chessIndexedNormals[0].size() * sizeof(glm::vec3), // FIXME:
+    //              &chessIndexedNormals[0][0], GL_STATIC_DRAW);
+
+    // glGenBuffers(1, &elementbuffer2);
+    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer2);
+    // glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+    //              chessIndices[0].size() * sizeof(unsigned short), // FIXME:
+    //              &chessIndices[0][0], GL_STATIC_DRAW);
 
     // GLuint Texture2 = loadDDS("Chess_New/wooddark5.dds");
 
@@ -307,7 +345,7 @@ int main(void)
         );
 
         // *********************************************************************************
-        // WORK ON THE SECOND OBJECT
+        // * THE SECOND OBJECT
 
         // Now render the second object
         // Use our shader for the second object (or the same shader)
@@ -329,20 +367,37 @@ int main(void)
         glBindTexture(GL_TEXTURE_2D, Texture2); // Texture for the second object
         glUniform1i(TextureID2, 0); // Set the sampler to use Texture Unit 0
 
-        // Bind buffers and draw the second object
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer2);
-        // Set attribute pointers for the second object
-        glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        for (int i = 0; i < 12; i++)
+        { // Bind buffers and draw the second object
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
+            // Set attribute pointers for the second object
+            glEnableVertexAttribArray(0);
+            glBindBuffer(GL_ARRAY_BUFFER, chessVertexBuffers[i]);
+            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-        glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+            glEnableVertexAttribArray(1);
+            glBindBuffer(GL_ARRAY_BUFFER, chessUvBuffers[i]);
+            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-        glEnableVertexAttribArray(2);
-        glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
-        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+            glEnableVertexAttribArray(2);
+            glBindBuffer(GL_ARRAY_BUFFER, chessNomralBuffers[i]);
+            glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        }
+
+        // // Bind buffers and draw the second object
+        // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer2);
+        // // Set attribute pointers for the second object
+        // glEnableVertexAttribArray(0);
+        // glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
+        // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+        // glEnableVertexAttribArray(1);
+        // glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
+        // glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+        // glEnableVertexAttribArray(2);
+        // glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
+        // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
         // Draw the second object
         glDrawElements(GL_TRIANGLES, chessIndices[0].size(), // FIXME:
