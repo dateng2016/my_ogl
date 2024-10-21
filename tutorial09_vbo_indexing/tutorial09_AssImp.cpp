@@ -151,10 +151,10 @@ int main(void)
     vector<vector<glm::vec2>> chessIndexedUvs;
     vector<vector<glm::vec3>> chessIndexedNormals;
 
-    // std::vector<unsigned short> indices2;
-    // std::vector<glm::vec3> indexed_vertices2;
-    // std::vector<glm::vec2> indexed_uvs2;
-    // std::vector<glm::vec3> indexed_normals2;
+    std::vector<unsigned short> indices2;
+    std::vector<glm::vec3> indexed_vertices2;
+    std::vector<glm::vec2> indexed_uvs2;
+    std::vector<glm::vec3> indexed_normals2;
 
     bool res2 = loadAssImpMultiple("Chess_New/chess.obj", chessIndices,
                                    chessIndexedVertices, chessIndexedUvs,
