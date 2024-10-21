@@ -367,7 +367,7 @@ int main(void)
         glBindTexture(GL_TEXTURE_2D, Texture2); // Texture for the second object
         glUniform1i(TextureID2, 0); // Set the sampler to use Texture Unit 0
 
-        for (int i = 0; i < 12; i++)
+        for (int i = 0; i < 6; i++)
         { // Bind buffers and draw the second object
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
             // Set attribute pointers for the second object
