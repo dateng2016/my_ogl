@@ -224,12 +224,6 @@ bool loadAssImpMultiple(const char* path,
         scene->mMeshes[0]; // In this simple example code we always use the 1rst
                            // mesh (in OBJ files there is often only one anyway)
 
-    cout << "there are total of " << scene->mNumMeshes << " meshes" << endl;
-    for (int i = 0; i < scene->mNumMeshes; i++)
-    {
-        cout << scene->mMeshes[i] << endl;
-    }
-
     // Fill vertices positions
     vertices.reserve(mesh->mNumVertices);
     for (unsigned int i = 0; i < mesh->mNumVertices; i++)
