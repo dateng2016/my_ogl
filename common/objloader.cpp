@@ -1,7 +1,9 @@
 #include <cstring>
+#include <iostream>
 #include <stdio.h>
 #include <string>
 #include <vector>
+using namespace std;
 
 #include <glm/glm.hpp>
 
@@ -196,10 +198,10 @@ bool loadAssImp(const char* path, std::vector<unsigned short>& indices,
     return true;
 }
 
-bool loadAssImpMultipl(const char* path, std::vector<unsigned short>& indices,
-                       std::vector<glm::vec3>& vertices,
-                       std::vector<glm::vec2>& uvs,
-                       std::vector<glm::vec3>& normals)
+bool loadAssImpMultiple(const char* path, std::vector<unsigned short>& indices,
+                        std::vector<glm::vec3>& vertices,
+                        std::vector<glm::vec2>& uvs,
+                        std::vector<glm::vec3>& normals)
 {
 
     Assimp::Importer importer;
@@ -214,9 +216,20 @@ bool loadAssImpMultipl(const char* path, std::vector<unsigned short>& indices,
         getchar();
         return false;
     }
+
+    // TODO: Note that scene->mMeshes contains all the meshes that we are
+    // interested in
+    // mesh->mNumVertices is the number of vertices for ONE mesh
+
     const aiMesh* mesh =
         scene->mMeshes[0]; // In this simple example code we always use the 1rst
                            // mesh (in OBJ files there is often only one anyway)
+
+    cout << "there are total of " << scene->mNumMeshes << " meshes" << endl;
+    for (int i = 0; i < scene->mNumMeshes; i++)
+    {
+        cout << scene->mMeshes[i] << endl;
+    }
 
     // Fill vertices positions
     vertices.reserve(mesh->mNumVertices);
