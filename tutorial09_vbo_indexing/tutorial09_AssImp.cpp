@@ -524,7 +524,42 @@ int main(void)
 
         // TODO: +z towards bottom +x towards right
 
-        for (int i = 0; i < 12; i += 2)
+        // * KING
+
+        glm::mat4 kingModelMatrix1 =
+            glm::translate(ModelMatrix2, glm::vec3(-600.0f, 0.0f, 0.0f));
+
+        MVP = ProjectionMatrix * ViewMatrix * kingModelMatrix1;
+
+        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+        glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &kingModelMatrix1[0][0]);
+        glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+
+        // Bind the texture for the second object
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D,
+                      Texture2);    // Texture for the second object
+        glUniform1i(TextureID2, 0); // Set the sampler to use Texture Unit 0
+
+        // Bind buffers and draw the second object
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, kingElementBuffer);
+        // Set attribute pointers for the second object
+        glEnableVertexAttribArray(0);
+        glBindBuffer(GL_ARRAY_BUFFER, kingVertexBuffer);
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+        glEnableVertexAttribArray(1);
+        glBindBuffer(GL_ARRAY_BUFFER, kingUvBuffer);
+        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+        glEnableVertexAttribArray(2);
+        glBindBuffer(GL_ARRAY_BUFFER, kingNormalBuffer);
+        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        glDrawElements(GL_TRIANGLES, kingIndices.size(), GL_UNSIGNED_SHORT,
+                       (void*)0);
+
+        // ! TODELETE
+        for (int i = 0; i < 0; i += 2)
         {
 
             ModelMatrix2 =
@@ -558,23 +593,6 @@ int main(void)
             glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
             glDrawElements(GL_TRIANGLES, kingIndices.size(), GL_UNSIGNED_SHORT,
                            (void*)0);
-            // !TO DELETE
-            // // Bind buffers and draw the second object
-            // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
-            // // Set attribute pointers for the second object
-            // glEnableVertexAttribArray(0);
-            // glBindBuffer(GL_ARRAY_BUFFER, chessVertexBuffers[i]);
-            // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-            // glEnableVertexAttribArray(1);
-            // glBindBuffer(GL_ARRAY_BUFFER, chessUvBuffers[i]);
-            // glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-            // glEnableVertexAttribArray(2);
-            // glBindBuffer(GL_ARRAY_BUFFER, chessNomralBuffers[i]);
-            // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-            // glDrawElements(GL_TRIANGLES, chessIndices[i].size(),
-            //                GL_UNSIGNED_SHORT, (void*)0);
         }
 
         // *********************************************************************************
