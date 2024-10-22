@@ -1,4 +1,5 @@
 // Include standard headers
+#include "render.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <vector>
@@ -21,49 +22,6 @@ using namespace std;
 #include <common/shader.hpp>
 #include <common/texture.hpp>
 #include <common/vboindexer.hpp>
-using namespace std;
-
-float oneGridLength = 275.0f;
-
-void render(int right, int down, glm::mat4 referenceModel, GLuint MatrixID,
-            GLuint ModelMatrixID, GLuint ViewMatrixID, GLuint Texture,
-            GLuint TextureID, GLuint elementBuffer, GLuint vertexBuffer,
-            GLuint uvBuffer, GLuint normalBuffer,
-            vector<unsigned short> indices)
-{
-    glm::mat4 modelMatrix =
-        glm::translate(referenceModel, glm::vec3(right * oneGridLength, 0.0f,
-                                                 down * oneGridLength));
-    glm::mat4 ProjectionMatrix = getProjectionMatrix();
-    glm::mat4 ViewMatrix = getViewMatrix();
-    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * modelMatrix;
-
-    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-    glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &modelMatrix[0][0]);
-    glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
-
-    // Bind the texture for the second object
-    glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D,
-                  Texture);    // Texture for the second object
-    glUniform1i(TextureID, 0); // Set the sampler to use Texture Unit 0
-
-    // Bind buffers and draw the second object
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
-    // Set attribute pointers for the second object
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-    glEnableVertexAttribArray(1);
-    glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-    glEnableVertexAttribArray(2);
-    glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
-    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, (void*)0);
-}
 
 int main(void)
 {
@@ -193,11 +151,6 @@ int main(void)
     vector<vector<glm::vec2>> chessIndexedUvs;
     vector<vector<glm::vec3>> chessIndexedNormals;
 
-    // std::vector<unsigned short> indices2;
-    // std::vector<glm::vec3> indexed_vertices2;
-    // std::vector<glm::vec2> indexed_uvs2;
-    // std::vector<glm::vec3> indexed_normals2;
-
     bool res2 = loadAssImpMultiple("Chess_New/chess.obj", chessIndices,
                                    chessIndexedVertices, chessIndexedUvs,
                                    chessIndexedNormals);
@@ -215,8 +168,6 @@ int main(void)
     // REGINA2
     // TORRE02          10 -> Rook
     // TORRE3
-
-    // ***********************
 
     // Assigning accordingly
     // 0 -> Bishop
@@ -236,6 +187,7 @@ int main(void)
         kingIndices, queenIndices, rookIndices;
     for (int i = 0; i < 12; i += 2)
     {
+        // Here we assign buffer according to their indcies i
         if (i == 0)
         {
             bishopIndices = chessIndices[i];
@@ -511,89 +463,83 @@ int main(void)
         // * THE CHESS MESHES
 
         double scaleFactor2 = 0.002;
-        glm::mat4 ModelMatrix2 =
+        glm::mat4 chessModelMatrix =
             glm::scale(glm::mat4(1.0),
                        glm::vec3(scaleFactor2, scaleFactor2, scaleFactor2));
-        // * First We need to translate towards -y and -z to put it ON board
-        ModelMatrix2 =
-            glm::translate(ModelMatrix2, glm::vec3(0.0f, -100.0f, -100.0f));
+        // * First We need to translate and rotate to put the chess pieces ON
+        // * the board
+        chessModelMatrix =
+            glm::translate(chessModelMatrix, glm::vec3(0.0f, -100.0f, -100.0f));
 
-        // * Then we do the rotation Now queen is located at the middle to
-        // * the left
-        ModelMatrix2 = glm::rotate(ModelMatrix2, glm::radians(90.0f),
-                                   glm::vec3(1.0f, 0.0f, 0.0f));
+        chessModelMatrix = glm::rotate(chessModelMatrix, glm::radians(90.0f),
+                                       glm::vec3(1.0f, 0.0f, 0.0f));
 
-        // TODO: +z towards bottom +x towards right ONE grid is about 275
-        // float oneGridLength = 275.0f;
         // * Render KING
-
-        render(-2, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(-2, 2, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, kingElementBuffer, kingVertexBuffer,
                kingUvBuffer, kingNormalBuffer, kingIndices);
-        render(-2, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(-2, -5, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, kingElementBuffer, kingVertexBuffer,
                kingUvBuffer, kingNormalBuffer, kingIndices);
         // * Render QUEEN
-        render(0, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(0, 2, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, queenElementBuffer, queenVertexBuffer,
                queenUvBuffer, queenNormalBuffer, queenIndices);
-        render(0, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(0, -5, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, queenElementBuffer, queenVertexBuffer,
                queenUvBuffer, queenNormalBuffer, queenIndices);
         // * Render BISHOP
-        render(-1, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(-1, 2, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, bishopElementBuffer, bishopVertexBuffer,
                bishopUvBuffer, bishopNormalBuffer, bishopIndices);
-        render(-1, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(-1, -5, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, bishopElementBuffer, bishopVertexBuffer,
                bishopUvBuffer, bishopNormalBuffer, bishopIndices);
-        render(2, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(2, 2, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, bishopElementBuffer, bishopVertexBuffer,
                bishopUvBuffer, bishopNormalBuffer, bishopIndices);
-        render(2, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(2, -5, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, bishopElementBuffer, bishopVertexBuffer,
                bishopUvBuffer, bishopNormalBuffer, bishopIndices);
 
         // * Render KNIGHT
-        render(-1, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(-1, 2, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
                knightUvBuffer, knightNormalBuffer, knightIndices);
-        render(-1, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(-1, -5, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
                knightUvBuffer, knightNormalBuffer, knightIndices);
-        render(4, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(4, 2, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
                knightUvBuffer, knightNormalBuffer, knightIndices);
-        render(4, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(4, -5, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
                knightUvBuffer, knightNormalBuffer, knightIndices);
         // * Render ROOK
-        render(-1, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(-1, 2, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, rookElementBuffer, rookVertexBuffer,
                rookUvBuffer, rookNormalBuffer, rookIndices);
-        render(-1, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(-1, -5, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, rookElementBuffer, rookVertexBuffer,
                rookUvBuffer, rookNormalBuffer, rookIndices);
-        render(6, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(6, 2, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, rookElementBuffer, rookVertexBuffer,
                rookUvBuffer, rookNormalBuffer, rookIndices);
-        render(6, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+        render(6, -5, chessModelMatrix, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, rookElementBuffer, rookVertexBuffer,
                rookUvBuffer, rookNormalBuffer, rookIndices);
         // * Render PAWN
-        // Down 1 Up 4
-        // Right [-6, 1]
         for (int i = -6; i < 2; i++)
         {
-            render(i, 1, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
-                   Texture2, TextureID2, pawnElementBuffer, pawnVertexBuffer,
-                   pawnUvBuffer, pawnNormalBuffer, pawnIndices);
-            render(i, -4, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
-                   Texture2, TextureID2, pawnElementBuffer, pawnVertexBuffer,
-                   pawnUvBuffer, pawnNormalBuffer, pawnIndices);
+            render(i, 1, chessModelMatrix, MatrixID, ModelMatrixID,
+                   ViewMatrixID, Texture2, TextureID2, pawnElementBuffer,
+                   pawnVertexBuffer, pawnUvBuffer, pawnNormalBuffer,
+                   pawnIndices);
+            render(i, -4, chessModelMatrix, MatrixID, ModelMatrixID,
+                   ViewMatrixID, Texture2, TextureID2, pawnElementBuffer,
+                   pawnVertexBuffer, pawnUvBuffer, pawnNormalBuffer,
+                   pawnIndices);
         }
-
-        // *********************************************************************************
 
         glDisableVertexAttribArray(0);
         glDisableVertexAttribArray(1);

@@ -226,6 +226,7 @@ create_target_launcher(tutorial09_vbo_indexing WORKING_DIRECTORY "${CMAKE_CURREN
 # Tutorial 9 - AssImp model loading
 add_executable(tutorial09_AssImp
 	tutorial09_vbo_indexing/tutorial09_AssImp.cpp
+	tutorial09_vbo_indexing/render.cpp
 	common/shader.cpp
 	common/shader.hpp
 	common/controls.cpp
