@@ -23,6 +23,48 @@ using namespace std;
 #include <common/vboindexer.hpp>
 using namespace std;
 
+float oneGridLength = 275.0f;
+
+void render(int right, int down, glm::mat4 referenceModel, GLuint MatrixID,
+            GLuint ModelMatrixID, GLuint ViewMatrixID, GLuint Texture,
+            GLuint TextureID, GLuint elementBuffer, GLuint vertexBuffer,
+            GLuint uvBuffer, GLuint normalBuffer,
+            vector<unsigned short> indices)
+{
+    glm::mat4 modelMatrix =
+        glm::translate(referenceModel, glm::vec3(right * oneGridLength, 0.0f,
+                                                 down * oneGridLength));
+    glm::mat4 ProjectionMatrix = getProjectionMatrix();
+    glm::mat4 ViewMatrix = getViewMatrix();
+    glm::mat4 MVP = ProjectionMatrix * ViewMatrix * modelMatrix;
+
+    glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+    glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &modelMatrix[0][0]);
+    glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+
+    // Bind the texture for the second object
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D,
+                  Texture);    // Texture for the second object
+    glUniform1i(TextureID, 0); // Set the sampler to use Texture Unit 0
+
+    // Bind buffers and draw the second object
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementBuffer);
+    // Set attribute pointers for the second object
+    glEnableVertexAttribArray(0);
+    glBindBuffer(GL_ARRAY_BUFFER, vertexBuffer);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+    glEnableVertexAttribArray(1);
+    glBindBuffer(GL_ARRAY_BUFFER, uvBuffer);
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+    glEnableVertexAttribArray(2);
+    glBindBuffer(GL_ARRAY_BUFFER, normalBuffer);
+    glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+    glDrawElements(GL_TRIANGLES, indices.size(), GL_UNSIGNED_SHORT, (void*)0);
+}
+
 int main(void)
 {
     // Initialize GLFW
@@ -522,78 +564,94 @@ int main(void)
         ModelMatrix2 = glm::rotate(ModelMatrix2, glm::radians(90.0f),
                                    glm::vec3(1.0f, 0.0f, 0.0f));
 
-        // TODO: +z towards bottom +x towards right
-
+        // TODO: +z towards bottom +x towards right ONE grid is about 275
+        // float oneGridLength = 275.0f;
         // * KING
 
-        glm::mat4 kingModelMatrix1 =
-            glm::translate(ModelMatrix2, glm::vec3(-600.0f, 0.0f, 0.0f));
+        render(-2, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, kingElementBuffer, kingVertexBuffer,
+               kingUvBuffer, kingNormalBuffer, kingIndices);
+        render(-2, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, kingElementBuffer, kingVertexBuffer,
+               kingUvBuffer, kingNormalBuffer, kingIndices);
 
-        MVP = ProjectionMatrix * ViewMatrix * kingModelMatrix1;
+        // ! TO DELETE
+        // glm::mat4 kingModelMatrix1 =
+        //     glm::translate(ModelMatrix2, glm::vec3(-2 * oneGridLength,
+        //     0.0f,
+        //                                            2 * oneGridLength));
 
-        glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-        glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &kingModelMatrix1[0][0]);
-        glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+        // MVP = ProjectionMatrix * ViewMatrix * kingModelMatrix1;
 
-        // Bind the texture for the second object
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D,
-                      Texture2);    // Texture for the second object
-        glUniform1i(TextureID2, 0); // Set the sampler to use Texture Unit 0
+        // glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+        // glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE,
+        // &kingModelMatrix1[0][0]); glUniformMatrix4fv(ViewMatrixID, 1,
+        // GL_FALSE, &ViewMatrix[0][0]);
 
-        // Bind buffers and draw the second object
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, kingElementBuffer);
-        // Set attribute pointers for the second object
-        glEnableVertexAttribArray(0);
-        glBindBuffer(GL_ARRAY_BUFFER, kingVertexBuffer);
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        // // Bind the texture for the second object
+        // glActiveTexture(GL_TEXTURE0);
+        // glBindTexture(GL_TEXTURE_2D,
+        //               Texture2);    // Texture for the second object
+        // glUniform1i(TextureID2, 0); // Set the sampler to use Texture
+        // Unit 0
 
-        glEnableVertexAttribArray(1);
-        glBindBuffer(GL_ARRAY_BUFFER, kingUvBuffer);
-        glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        // // Bind buffers and draw the second object
+        // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, kingElementBuffer);
+        // // Set attribute pointers for the second object
+        // glEnableVertexAttribArray(0);
+        // glBindBuffer(GL_ARRAY_BUFFER, kingVertexBuffer);
+        // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-        glEnableVertexAttribArray(2);
-        glBindBuffer(GL_ARRAY_BUFFER, kingNormalBuffer);
-        glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-        glDrawElements(GL_TRIANGLES, kingIndices.size(), GL_UNSIGNED_SHORT,
-                       (void*)0);
+        // glEnableVertexAttribArray(1);
+        // glBindBuffer(GL_ARRAY_BUFFER, kingUvBuffer);
+        // glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+        // glEnableVertexAttribArray(2);
+        // glBindBuffer(GL_ARRAY_BUFFER, kingNormalBuffer);
+        // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        // glDrawElements(GL_TRIANGLES, kingIndices.size(),
+        // GL_UNSIGNED_SHORT,
+        //                (void*)0);
 
         // ! TODELETE
-        for (int i = 0; i < 0; i += 2)
-        {
+        // for (int i = 0; i < 0; i += 2)
+        // {
 
-            ModelMatrix2 =
-                glm::translate(ModelMatrix2, glm::vec3(100.0f, 0.0f, 0.0f));
+        //     ModelMatrix2 =
+        //         glm::translate(ModelMatrix2, glm::vec3(100.0f, 0.0f, 0.0f));
 
-            MVP = ProjectionMatrix * ViewMatrix * ModelMatrix2;
+        //     MVP = ProjectionMatrix * ViewMatrix * ModelMatrix2;
 
-            glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-            glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE, &ModelMatrix2[0][0]);
-            glUniformMatrix4fv(ViewMatrixID, 1, GL_FALSE, &ViewMatrix[0][0]);
+        //     glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
+        //     glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE,
+        //     &ModelMatrix2[0][0]); glUniformMatrix4fv(ViewMatrixID, 1,
+        //     GL_FALSE, &ViewMatrix[0][0]);
 
-            // Bind the texture for the second object
-            glActiveTexture(GL_TEXTURE0);
-            glBindTexture(GL_TEXTURE_2D,
-                          Texture2);    // Texture for the second object
-            glUniform1i(TextureID2, 0); // Set the sampler to use Texture Unit 0
+        //     // Bind the texture for the second object
+        //     glActiveTexture(GL_TEXTURE0);
+        //     glBindTexture(GL_TEXTURE_2D,
+        //                   Texture2);    // Texture for the second object
+        //     glUniform1i(TextureID2, 0); // Set the sampler to use Texture
+        //     Unit 0
 
-            // Bind buffers and draw the second object
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, kingElementBuffer);
-            // Set attribute pointers for the second object
-            glEnableVertexAttribArray(0);
-            glBindBuffer(GL_ARRAY_BUFFER, kingVertexBuffer);
-            glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        //     // Bind buffers and draw the second object
+        //     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, kingElementBuffer);
+        //     // Set attribute pointers for the second object
+        //     glEnableVertexAttribArray(0);
+        //     glBindBuffer(GL_ARRAY_BUFFER, kingVertexBuffer);
+        //     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-            glEnableVertexAttribArray(1);
-            glBindBuffer(GL_ARRAY_BUFFER, kingUvBuffer);
-            glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        //     glEnableVertexAttribArray(1);
+        //     glBindBuffer(GL_ARRAY_BUFFER, kingUvBuffer);
+        //     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
-            glEnableVertexAttribArray(2);
-            glBindBuffer(GL_ARRAY_BUFFER, kingNormalBuffer);
-            glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-            glDrawElements(GL_TRIANGLES, kingIndices.size(), GL_UNSIGNED_SHORT,
-                           (void*)0);
-        }
+        //     glEnableVertexAttribArray(2);
+        //     glBindBuffer(GL_ARRAY_BUFFER, kingNormalBuffer);
+        //     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+        //     glDrawElements(GL_TRIANGLES, kingIndices.size(),
+        //     GL_UNSIGNED_SHORT,
+        //                    (void*)0);
+        // }
 
         // *********************************************************************************
 
