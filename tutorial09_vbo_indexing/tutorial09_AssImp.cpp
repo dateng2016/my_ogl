@@ -161,18 +161,20 @@ int main(void)
                                    chessIndexedNormals);
 
     // *Here are the names of the 12 objects
-    // ALFIERE02
+    // ALFIERE02        -> Bishop
     // ALFIERE3
-    // Object02
+    // Object02         -> Knight
     // Object3
-    // PEDONE12
+    // PEDONE12         -> Pawn (The smallest one)
     // PEDONE13
-    // RE01
+    // RE01             -> King
     // RE2
-    // REGINA01
+    // REGINA01         -> Queen
     // REGINA2
-    // TORRE02
+    // TORRE02          -> Rook
     // TORRE3
+
+    // ***********************
 
     // Load it into a VBO
     // GLuint vertexbuffer2, uvbuffer2, normalbuffer2, elementbuffer2;
@@ -345,17 +347,23 @@ int main(void)
         );
 
         // *********************************************************************************
-        // * THE SECOND OBJECT
+        // * THE CHESS MESHES
 
-        // Now render the second object
-        // Use our shader for the second object (or the same shader)
-        // glm::mat4 ModelMatrix2 = glm::translate(
-        //     glm::mat4(1.0),
-        //     glm::vec3(2.0f, 0.0f, 0.0f)); // Translate to the right
-        double scaleFactor2 = 0.001;
+        double scaleFactor2 = 0.002;
         glm::mat4 ModelMatrix2 =
             glm::scale(glm::mat4(1.0),
                        glm::vec3(scaleFactor2, scaleFactor2, scaleFactor2));
+        // * First We need to translate towards -y and -z
+        ModelMatrix2 =
+            glm::translate(ModelMatrix2, glm::vec3(0.0f, -100.0f, -100.0f));
+
+        // * Then we do the rotation Now queen is located at the middle to the
+        // * left
+        ModelMatrix2 = glm::rotate(ModelMatrix2, glm::radians(90.0f),
+                                   glm::vec3(1.0f, 0.0f, 0.0f));
+        // ModelMatrix2 =
+        //     glm::translate(ModelMatrix2, glm::vec3(2000.0f, 2000.0f, 0.0f));
+
         MVP = ProjectionMatrix * ViewMatrix * ModelMatrix2;
 
         glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
@@ -367,8 +375,9 @@ int main(void)
         glBindTexture(GL_TEXTURE_2D, Texture2); // Texture for the second object
         glUniform1i(TextureID2, 0); // Set the sampler to use Texture Unit 0
 
-        for (int i = 0; i < 6; i++)
-        { // Bind buffers and draw the second object
+        for (int i = 0; i < 12; i += 2)
+        {
+            // Bind buffers and draw the second object
             glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
             // Set attribute pointers for the second object
             glEnableVertexAttribArray(0);
@@ -382,28 +391,9 @@ int main(void)
             glEnableVertexAttribArray(2);
             glBindBuffer(GL_ARRAY_BUFFER, chessNomralBuffers[i]);
             glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-            glDrawElements(GL_TRIANGLES, chessIndices[i].size(), // FIXME:
+            glDrawElements(GL_TRIANGLES, chessIndices[i].size(),
                            GL_UNSIGNED_SHORT, (void*)0);
         }
-
-        // // Bind buffers and draw the second object
-        // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer2);
-        // // Set attribute pointers for the second object
-        // glEnableVertexAttribArray(0);
-        // glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-        // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-        // glEnableVertexAttribArray(1);
-        // glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
-        // glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-        // glEnableVertexAttribArray(2);
-        // glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
-        // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-        // Draw the second object
-        // glDrawElements(GL_TRIANGLES, chessIndices[0].size(), // FIXME:
-        //                GL_UNSIGNED_SHORT, (void*)0);
 
         // *********************************************************************************
 
