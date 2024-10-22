@@ -556,8 +556,8 @@ int main(void)
             glEnableVertexAttribArray(2);
             glBindBuffer(GL_ARRAY_BUFFER, kingNormalBuffer);
             glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-            glDrawElements(GL_TRIANGLES, chessIndices[i].size(),
-                           GL_UNSIGNED_SHORT, (void*)0);
+            glDrawElements(GL_TRIANGLES, kingIndices.size(), GL_UNSIGNED_SHORT,
+                           (void*)0);
             // !TO DELETE
             // // Bind buffers and draw the second object
             // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
