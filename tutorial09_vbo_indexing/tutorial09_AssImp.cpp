@@ -575,12 +575,55 @@ int main(void)
                Texture2, TextureID2, kingElementBuffer, kingVertexBuffer,
                kingUvBuffer, kingNormalBuffer, kingIndices);
         // * Render QUEEN
+        render(0, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, queenElementBuffer, queenVertexBuffer,
+               queenUvBuffer, queenNormalBuffer, queenIndices);
+        render(0, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, queenElementBuffer, queenVertexBuffer,
+               queenUvBuffer, queenNormalBuffer, queenIndices);
+        // * Render BISHOP
         render(-1, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
-               Texture2, TextureID2, queenElementBuffer, queenVertexBuffer,
-               queenUvBuffer, queenNormalBuffer, queenIndices);
-        render(-1, 5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
-               Texture2, TextureID2, queenElementBuffer, queenVertexBuffer,
-               queenUvBuffer, queenNormalBuffer, queenIndices);
+               Texture2, TextureID2, bishopElementBuffer, bishopVertexBuffer,
+               bishopUvBuffer, bishopNormalBuffer, bishopIndices);
+        render(-1, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, bishopElementBuffer, bishopVertexBuffer,
+               bishopUvBuffer, bishopNormalBuffer, bishopIndices);
+        render(2, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, bishopElementBuffer, bishopVertexBuffer,
+               bishopUvBuffer, bishopNormalBuffer, bishopIndices);
+        render(2, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, bishopElementBuffer, bishopVertexBuffer,
+               bishopUvBuffer, bishopNormalBuffer, bishopIndices);
+
+        // * Render KNIGHT
+
+        // This one needs rotationx
+        render(-1, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
+               knightUvBuffer, knightNormalBuffer, knightIndices);
+        render(-1, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
+               knightUvBuffer, knightNormalBuffer, knightIndices);
+        // This one needs rotation
+        render(4, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
+               knightUvBuffer, knightNormalBuffer, knightIndices);
+        render(4, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
+               knightUvBuffer, knightNormalBuffer, knightIndices);
+        // * Render ROOK
+        render(-1, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, rookElementBuffer, rookVertexBuffer,
+               rookUvBuffer, rookNormalBuffer, rookIndices);
+        render(-1, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, rookElementBuffer, rookVertexBuffer,
+               rookUvBuffer, rookNormalBuffer, rookIndices);
+        render(6, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, rookElementBuffer, rookVertexBuffer,
+               rookUvBuffer, rookNormalBuffer, rookIndices);
+        render(6, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, rookElementBuffer, rookVertexBuffer,
+               rookUvBuffer, rookNormalBuffer, rookIndices);
 
         // ! TO DELETE
         // glm::mat4 kingModelMatrix1 =
