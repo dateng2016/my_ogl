@@ -142,6 +142,7 @@ int main(void)
                  GL_STATIC_DRAW);
 
     //  **********************************************************
+    // TODO:
 
     //    There are 12 meshes in the .obj file. We need vectors of size 12 of
     //    vectors to contain all the informations
@@ -161,23 +162,22 @@ int main(void)
                                    chessIndexedNormals);
 
     // *Here are the names of the 12 objects
-    // ALFIERE02        -> Bishop
+    // ALFIERE02        0 -> Bishop
     // ALFIERE3
-    // Object02         -> Knight
+    // Object02         2 -> Knight
     // Object3
-    // PEDONE12         -> Pawn (The smallest one)
+    // PEDONE12         4 -> Pawn (The smallest one)
     // PEDONE13
-    // RE01             -> King
+    // RE01             6 -> King
     // RE2
-    // REGINA01         -> Queen
+    // REGINA01         8 -> Queen
     // REGINA2
-    // TORRE02          -> Rook
+    // TORRE02          10 -> Rook
     // TORRE3
 
     // ***********************
 
     // Load it into a VBO
-    // GLuint vertexbuffer2, uvbuffer2, normalbuffer2, elementbuffer2;
     vector<GLuint> chessVertexBuffers, chessUvBuffers, chessNomralBuffers,
         chessElementBuffers;
     for (int i = 0; i < 12; i++)
@@ -200,48 +200,21 @@ int main(void)
         glGenBuffers(1, &chessUvBuffers[i]);
         glBindBuffer(GL_ARRAY_BUFFER, chessUvBuffers[i]);
         glBufferData(GL_ARRAY_BUFFER,
-                     chessIndexedUvs[i].size() * sizeof(glm::vec2), // FIXME:
+                     chessIndexedUvs[i].size() * sizeof(glm::vec2),
                      &chessIndexedUvs[i][0], GL_STATIC_DRAW);
 
         glGenBuffers(1, &chessNomralBuffers[i]);
         glBindBuffer(GL_ARRAY_BUFFER, chessNomralBuffers[i]);
         glBufferData(GL_ARRAY_BUFFER,
-                     chessIndexedNormals[i].size() *
-                         sizeof(glm::vec3), // FIXME:
+                     chessIndexedNormals[i].size() * sizeof(glm::vec3),
                      &chessIndexedNormals[i][0], GL_STATIC_DRAW);
 
         glGenBuffers(1, &chessElementBuffers[i]);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
         glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                     chessIndices[i].size() * sizeof(unsigned short), // FIXME:
+                     chessIndices[i].size() * sizeof(unsigned short),
                      &chessIndices[i][0], GL_STATIC_DRAW);
     }
-
-    // glGenBuffers(1, &vertexbuffer2);
-    // glBindBuffer(GL_ARRAY_BUFFER, vertexbuffer2);
-    // glBufferData(GL_ARRAY_BUFFER,
-    //              chessIndexedVertices[0].size() * sizeof(glm::vec3), //
-    //              FIXME: &chessIndexedVertices[0][0], GL_STATIC_DRAW);
-
-    // glGenBuffers(1, &uvbuffer2);
-    // glBindBuffer(GL_ARRAY_BUFFER, uvbuffer2);
-    // glBufferData(GL_ARRAY_BUFFER,
-    //              chessIndexedUvs[0].size() * sizeof(glm::vec2), // FIXME:
-    //              &chessIndexedUvs[0][0], GL_STATIC_DRAW);
-
-    // glGenBuffers(1, &normalbuffer2);
-    // glBindBuffer(GL_ARRAY_BUFFER, normalbuffer2);
-    // glBufferData(GL_ARRAY_BUFFER,
-    //              chessIndexedNormals[0].size() * sizeof(glm::vec3), // FIXME:
-    //              &chessIndexedNormals[0][0], GL_STATIC_DRAW);
-
-    // glGenBuffers(1, &elementbuffer2);
-    // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, elementbuffer2);
-    // glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-    //              chessIndices[0].size() * sizeof(unsigned short), // FIXME:
-    //              &chessIndices[0][0], GL_STATIC_DRAW);
-
-    // GLuint Texture2 = loadDDS("Chess_New/wooddark5.dds");
 
     GLuint Texture2 = loadBMP_custom("Chess_New/wooddar3.bmp");
     // Get a handle for our "myTextureSampler" uniform
