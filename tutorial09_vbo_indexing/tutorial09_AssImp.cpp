@@ -321,26 +321,26 @@ int main(void)
 
         // *********************************************************************************
         // * THE CHESS MESHES
-        // TODO:
+        // TODO: +z towards bottom +x towards right
+
+        double scaleFactor2 = 0.002;
+        glm::mat4 ModelMatrix2 =
+            glm::scale(glm::mat4(1.0),
+                       glm::vec3(scaleFactor2, scaleFactor2, scaleFactor2));
+        // * First We need to translate towards -y and -z
+        ModelMatrix2 =
+            glm::translate(ModelMatrix2, glm::vec3(0.0f, -100.0f, -100.0f));
+
+        // * Then we do the rotation Now queen is located at the middle to
+        // the
+        // * left
+        ModelMatrix2 = glm::rotate(ModelMatrix2, glm::radians(90.0f),
+                                   glm::vec3(1.0f, 0.0f, 0.0f));
         for (int i = 0; i < 12; i += 2)
         {
 
-            double scaleFactor2 = 0.002;
-            glm::mat4 ModelMatrix2 =
-                glm::scale(glm::mat4(1.0),
-                           glm::vec3(scaleFactor2, scaleFactor2, scaleFactor2));
-            // * First We need to translate towards -y and -z
             ModelMatrix2 =
-                glm::translate(ModelMatrix2, glm::vec3(0.0f, -100.0f, -100.0f));
-
-            // * Then we do the rotation Now queen is located at the middle to
-            // the
-            // * left
-            ModelMatrix2 = glm::rotate(ModelMatrix2, glm::radians(90.0f),
-                                       glm::vec3(1.0f, 0.0f, 0.0f));
-            // ModelMatrix2 =
-            //     glm::translate(ModelMatrix2, glm::vec3(2000.0f, 2000.0f,
-            //     0.0f));
+                glm::translate(ModelMatrix2, glm::vec3(100.0f, 0.0f, 0.0f));
 
             MVP = ProjectionMatrix * ViewMatrix * ModelMatrix2;
 
