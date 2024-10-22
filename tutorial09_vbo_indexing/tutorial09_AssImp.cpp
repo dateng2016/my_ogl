@@ -142,7 +142,6 @@ int main(void)
                  GL_STATIC_DRAW);
 
     //  **********************************************************
-    // TODO:
 
     //    There are 12 meshes in the .obj file. We need vectors of size 12 of
     //    vectors to contain all the informations
@@ -176,6 +175,7 @@ int main(void)
     // TORRE3
 
     // ***********************
+    // TODO: Assign each pieces accordingly
 
     // Load it into a VBO
     vector<GLuint> chessVertexBuffers, chessUvBuffers, chessNomralBuffers,
@@ -321,6 +321,7 @@ int main(void)
 
         // *********************************************************************************
         // * THE CHESS MESHES
+        // TODO:
 
         double scaleFactor2 = 0.002;
         glm::mat4 ModelMatrix2 =
