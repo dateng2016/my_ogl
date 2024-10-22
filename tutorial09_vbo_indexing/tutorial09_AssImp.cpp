@@ -217,21 +217,6 @@ int main(void)
     // TORRE3
 
     // ***********************
-    // TODO: Assign each pieces accordingly
-
-    // Load it into a VBO
-    // ! To DELETE
-    vector<GLuint> chessVertexBuffers, chessUvBuffers, chessNomralBuffers,
-        chessElementBuffers;
-    for (int i = 0; i < 12; i++)
-    {
-        GLuint chessVertexBuffer, chessUvBuffer, chessNomralBuffer,
-            chessElementBuffer;
-        chessVertexBuffers.push_back(chessVertexBuffer);
-        chessUvBuffers.push_back(chessUvBuffer);
-        chessNomralBuffers.push_back(chessUvBuffer);
-        chessElementBuffers.push_back(chessElementBuffer);
-    }
 
     // TODO: Assigning accordingly
     // 0 -> Bishop
@@ -419,30 +404,6 @@ int main(void)
                          chessIndices[i].size() * sizeof(unsigned short),
                          &chessIndices[i][0], GL_STATIC_DRAW);
         }
-        // ! TO DELETE
-        // glGenBuffers(1, &chessVertexBuffers[i]);
-        // glBindBuffer(GL_ARRAY_BUFFER, chessVertexBuffers[i]);
-        // glBufferData(GL_ARRAY_BUFFER,
-        //              chessIndexedVertices[i].size() * sizeof(glm::vec3),
-        //              &chessIndexedVertices[i][0], GL_STATIC_DRAW);
-
-        // glGenBuffers(1, &chessUvBuffers[i]);
-        // glBindBuffer(GL_ARRAY_BUFFER, chessUvBuffers[i]);
-        // glBufferData(GL_ARRAY_BUFFER,
-        //              chessIndexedUvs[i].size() * sizeof(glm::vec2),
-        //              &chessIndexedUvs[i][0], GL_STATIC_DRAW);
-
-        // glGenBuffers(1, &chessNomralBuffers[i]);
-        // glBindBuffer(GL_ARRAY_BUFFER, chessNomralBuffers[i]);
-        // glBufferData(GL_ARRAY_BUFFER,
-        //              chessIndexedNormals[i].size() * sizeof(glm::vec3),
-        //              &chessIndexedNormals[i][0], GL_STATIC_DRAW);
-
-        // glGenBuffers(1, &chessElementBuffers[i]);
-        // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
-        // glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-        //              chessIndices[i].size() * sizeof(unsigned short),
-        //              &chessIndices[i][0], GL_STATIC_DRAW);
     }
 
     GLuint Texture2 = loadBMP_custom("Chess_New/wooddar3.bmp");
@@ -622,86 +583,17 @@ int main(void)
                Texture2, TextureID2, rookElementBuffer, rookVertexBuffer,
                rookUvBuffer, rookNormalBuffer, rookIndices);
         // * Render PAWN
-        render(0, 0, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
-               Texture2, TextureID2, pawnElementBuffer, pawnVertexBuffer,
-               pawnUvBuffer, pawnNormalBuffer, pawnIndices);
-        // ! TO DELETE
-        // glm::mat4 kingModelMatrix1 =
-        //     glm::translate(ModelMatrix2, glm::vec3(-2 * oneGridLength,
-        //     0.0f,
-        //                                            2 * oneGridLength));
-
-        // MVP = ProjectionMatrix * ViewMatrix * kingModelMatrix1;
-
-        // glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-        // glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE,
-        // &kingModelMatrix1[0][0]); glUniformMatrix4fv(ViewMatrixID, 1,
-        // GL_FALSE, &ViewMatrix[0][0]);
-
-        // // Bind the texture for the second object
-        // glActiveTexture(GL_TEXTURE0);
-        // glBindTexture(GL_TEXTURE_2D,
-        //               Texture2);    // Texture for the second object
-        // glUniform1i(TextureID2, 0); // Set the sampler to use Texture
-        // Unit 0
-
-        // // Bind buffers and draw the second object
-        // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, kingElementBuffer);
-        // // Set attribute pointers for the second object
-        // glEnableVertexAttribArray(0);
-        // glBindBuffer(GL_ARRAY_BUFFER, kingVertexBuffer);
-        // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-        // glEnableVertexAttribArray(1);
-        // glBindBuffer(GL_ARRAY_BUFFER, kingUvBuffer);
-        // glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-        // glEnableVertexAttribArray(2);
-        // glBindBuffer(GL_ARRAY_BUFFER, kingNormalBuffer);
-        // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-        // glDrawElements(GL_TRIANGLES, kingIndices.size(),
-        // GL_UNSIGNED_SHORT,
-        //                (void*)0);
-
-        // ! TODELETE
-        // for (int i = 0; i < 0; i += 2)
-        // {
-
-        //     ModelMatrix2 =
-        //         glm::translate(ModelMatrix2, glm::vec3(100.0f, 0.0f, 0.0f));
-
-        //     MVP = ProjectionMatrix * ViewMatrix * ModelMatrix2;
-
-        //     glUniformMatrix4fv(MatrixID, 1, GL_FALSE, &MVP[0][0]);
-        //     glUniformMatrix4fv(ModelMatrixID, 1, GL_FALSE,
-        //     &ModelMatrix2[0][0]); glUniformMatrix4fv(ViewMatrixID, 1,
-        //     GL_FALSE, &ViewMatrix[0][0]);
-
-        //     // Bind the texture for the second object
-        //     glActiveTexture(GL_TEXTURE0);
-        //     glBindTexture(GL_TEXTURE_2D,
-        //                   Texture2);    // Texture for the second object
-        //     glUniform1i(TextureID2, 0); // Set the sampler to use Texture
-        //     Unit 0
-
-        //     // Bind buffers and draw the second object
-        //     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, kingElementBuffer);
-        //     // Set attribute pointers for the second object
-        //     glEnableVertexAttribArray(0);
-        //     glBindBuffer(GL_ARRAY_BUFFER, kingVertexBuffer);
-        //     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-        //     glEnableVertexAttribArray(1);
-        //     glBindBuffer(GL_ARRAY_BUFFER, kingUvBuffer);
-        //     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
-
-        //     glEnableVertexAttribArray(2);
-        //     glBindBuffer(GL_ARRAY_BUFFER, kingNormalBuffer);
-        //     glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-        //     glDrawElements(GL_TRIANGLES, kingIndices.size(),
-        //     GL_UNSIGNED_SHORT,
-        //                    (void*)0);
-        // }
+        // Down 1 Up 4
+        // Right [-6, 1]
+        for (int i = -6; i < 2; i++)
+        {
+            render(i, 1, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+                   Texture2, TextureID2, pawnElementBuffer, pawnVertexBuffer,
+                   pawnUvBuffer, pawnNormalBuffer, pawnIndices);
+            render(i, -4, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+                   Texture2, TextureID2, pawnElementBuffer, pawnVertexBuffer,
+                   pawnUvBuffer, pawnNormalBuffer, pawnIndices);
+        }
 
         // *********************************************************************************
 
