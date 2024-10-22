@@ -1,3 +1,10 @@
+/*
+Author: Da Teng
+Class: ECE6122
+Last Date Modified: 10/22/2024
+Description:
+This file contains the render function to render different objects
+*/
 // Include standard headers
 #include <stdio.h>
 #include <stdlib.h>
@@ -29,6 +36,39 @@ void render(int right, int down, glm::mat4 referenceModel, GLuint MatrixID,
             GLuint uvBuffer, GLuint normalBuffer,
             vector<unsigned short> indices)
 {
+    /**
+     * @brief Renders a 3D object in the scene.
+     *
+     * This function sets up the transformation matrices for a specified object,
+     * applies the appropriate texture, and draws the object using its vertex
+     * and index buffers. The object is positioned based on the provided grid
+     * coordinates, relative to a reference model matrix.
+     *
+     * @param right         The horizontal offset from the reference model, in
+     *                      grid units.
+     * @param down          The vertical offset from the reference model, in
+     *                      grid units.
+     * @param referenceModel The base model matrix to which the translation is
+     *                       applied.
+     * @param MatrixID      The uniform location for the Model-View-Projection
+     *                      (MVP) matrix.
+     * @param ModelMatrixID The uniform location for the model matrix.
+     * @param ViewMatrixID  The uniform location for the view matrix.
+     * @param Texture       The OpenGL texture identifier for the object.
+     * @param TextureID     The uniform location for the texture sampler.
+     * @param elementBuffer  The buffer ID for the object's index data.
+     * @param vertexBuffer   The buffer ID for the object's vertex data.
+     * @param uvBuffer       The buffer ID for the object's UV mapping data.
+     * @param normalBuffer   The buffer ID for the object's normal data.
+     * @param indices        A vector containing the index data used for drawing
+     *                       the object.
+     *
+     * @return void
+     *
+     * This function does not return a value. It directly interacts with OpenGL
+     * to render the specified object based on the input parameters.
+     */
+
     glm::mat4 modelMatrix =
         glm::translate(referenceModel, glm::vec3(right * oneGridLength, 0.0f,
                                                  down * oneGridLength));

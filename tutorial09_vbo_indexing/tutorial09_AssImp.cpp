@@ -1,3 +1,11 @@
+/*
+Author: Da Teng
+Class: ECE6122
+Last Date Modified: 10/22/2024
+Description:
+This is the main file for the assignment that renders the objects
+*/
+
 // Include standard headers
 #include "render.h"
 #include <stdio.h>
