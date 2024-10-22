@@ -178,6 +178,7 @@ int main(void)
     // TODO: Assign each pieces accordingly
 
     // Load it into a VBO
+    // ! To DELETE
     vector<GLuint> chessVertexBuffers, chessUvBuffers, chessNomralBuffers,
         chessElementBuffers;
     for (int i = 0; i < 12; i++)
@@ -197,36 +198,201 @@ int main(void)
     // 6 -> King
     // 8 -> Queen
     // 10 -> Rook
-    GLuint bishopBuffer, knightBuffer, pawnBuffer, kingBuffer, queenBuffer,
-        rookBuffer, bishopBuffer, knightBuffer, pawnBuffer, kingBuffer,
-        queenBuffer, rookBuffer, bishopBuffer, knightBuffer, pawnBuffer,
-        kingBuffer, queenBuffer, rookBuffer, bishopBuffer, knightBuffer,
-        pawnBuffer, kingBuffer, queenBuffer, rookBuffer;
-    for (int i = 0; i < 12; i++)
+    GLuint bishopVertexBuffer, knightVertexBuffer, pawnVertexBuffer,
+        kingVertexBuffer, queenVertexBuffer, rookVertexBuffer, bishopUvBuffer,
+        knightUvBuffer, pawnUvBuffer, kingUvBuffer, queenUvBuffer, rookUvBuffer,
+        bishopNormalBuffer, knightNormalBuffer, pawnNormalBuffer,
+        kingNormalBuffer, queenNormalBuffer, rookNormalBuffer,
+        bishopElementBuffer, knightElementBuffer, pawnElementBuffer,
+        kingElementBuffer, queenElementBuffer, rookElementBuffer;
+    for (int i = 0; i < 12; i += 2)
     {
-        glGenBuffers(1, &chessVertexBuffers[i]);
-        glBindBuffer(GL_ARRAY_BUFFER, chessVertexBuffers[i]);
-        glBufferData(GL_ARRAY_BUFFER,
-                     chessIndexedVertices[i].size() * sizeof(glm::vec3),
-                     &chessIndexedVertices[i][0], GL_STATIC_DRAW);
+        if (i == 0)
+        {
+            // This is Bishop
+            glGenBuffers(1, &bishopVertexBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, bishopVertexBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedVertices[i].size() * sizeof(glm::vec3),
+                         &chessIndexedVertices[i][0], GL_STATIC_DRAW);
 
-        glGenBuffers(1, &chessUvBuffers[i]);
-        glBindBuffer(GL_ARRAY_BUFFER, chessUvBuffers[i]);
-        glBufferData(GL_ARRAY_BUFFER,
-                     chessIndexedUvs[i].size() * sizeof(glm::vec2),
-                     &chessIndexedUvs[i][0], GL_STATIC_DRAW);
+            glGenBuffers(1, &bishopUvBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, bishopUvBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedUvs[i].size() * sizeof(glm::vec2),
+                         &chessIndexedUvs[i][0], GL_STATIC_DRAW);
 
-        glGenBuffers(1, &chessNomralBuffers[i]);
-        glBindBuffer(GL_ARRAY_BUFFER, chessNomralBuffers[i]);
-        glBufferData(GL_ARRAY_BUFFER,
-                     chessIndexedNormals[i].size() * sizeof(glm::vec3),
-                     &chessIndexedNormals[i][0], GL_STATIC_DRAW);
+            glGenBuffers(1, &bishopNormalBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, bishopNormalBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedNormals[i].size() * sizeof(glm::vec3),
+                         &chessIndexedNormals[i][0], GL_STATIC_DRAW);
 
-        glGenBuffers(1, &chessElementBuffers[i]);
-        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
-        glBufferData(GL_ELEMENT_ARRAY_BUFFER,
-                     chessIndices[i].size() * sizeof(unsigned short),
-                     &chessIndices[i][0], GL_STATIC_DRAW);
+            glGenBuffers(1, &bishopElementBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, bishopElementBuffer);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                         chessIndices[i].size() * sizeof(unsigned short),
+                         &chessIndices[i][0], GL_STATIC_DRAW);
+        }
+        if (i == 2)
+        {
+            // This is knight
+            glGenBuffers(1, &knightVertexBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, knightVertexBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedVertices[i].size() * sizeof(glm::vec3),
+                         &chessIndexedVertices[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &knightUvBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, knightUvBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedUvs[i].size() * sizeof(glm::vec2),
+                         &chessIndexedUvs[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &knightNormalBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, knightNormalBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedNormals[i].size() * sizeof(glm::vec3),
+                         &chessIndexedNormals[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &knightElementBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, knightElementBuffer);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                         chessIndices[i].size() * sizeof(unsigned short),
+                         &chessIndices[i][0], GL_STATIC_DRAW);
+        }
+        if (i == 4)
+        {
+            // This is pawn
+            glGenBuffers(1, &pawnVertexBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, pawnVertexBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedVertices[i].size() * sizeof(glm::vec3),
+                         &chessIndexedVertices[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &pawnUvBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, pawnUvBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedUvs[i].size() * sizeof(glm::vec2),
+                         &chessIndexedUvs[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &pawnNormalBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, pawnNormalBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedNormals[i].size() * sizeof(glm::vec3),
+                         &chessIndexedNormals[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &pawnElementBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, pawnElementBuffer);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                         chessIndices[i].size() * sizeof(unsigned short),
+                         &chessIndices[i][0], GL_STATIC_DRAW);
+        }
+        if (i == 6)
+        {
+            // This is king
+            glGenBuffers(1, &kingVertexBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, kingVertexBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedVertices[i].size() * sizeof(glm::vec3),
+                         &chessIndexedVertices[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &kingUvBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, kingUvBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedUvs[i].size() * sizeof(glm::vec2),
+                         &chessIndexedUvs[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &kingNormalBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, kingNormalBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedNormals[i].size() * sizeof(glm::vec3),
+                         &chessIndexedNormals[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &kingElementBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, kingElementBuffer);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                         chessIndices[i].size() * sizeof(unsigned short),
+                         &chessIndices[i][0], GL_STATIC_DRAW);
+        }
+        if (i == 8)
+        {
+            // This is queen
+            glGenBuffers(1, &queenVertexBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, queenVertexBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedVertices[i].size() * sizeof(glm::vec3),
+                         &chessIndexedVertices[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &queenUvBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, queenUvBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedUvs[i].size() * sizeof(glm::vec2),
+                         &chessIndexedUvs[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &queenNormalBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, queenNormalBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedNormals[i].size() * sizeof(glm::vec3),
+                         &chessIndexedNormals[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &queenElementBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, queenElementBuffer);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                         chessIndices[i].size() * sizeof(unsigned short),
+                         &chessIndices[i][0], GL_STATIC_DRAW);
+        }
+        if (i == 10)
+        {
+            // This is rook
+            glGenBuffers(1, &rookVertexBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, rookVertexBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedVertices[i].size() * sizeof(glm::vec3),
+                         &chessIndexedVertices[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &rookUvBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, rookUvBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedUvs[i].size() * sizeof(glm::vec2),
+                         &chessIndexedUvs[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &rookNormalBuffer);
+            glBindBuffer(GL_ARRAY_BUFFER, rookNormalBuffer);
+            glBufferData(GL_ARRAY_BUFFER,
+                         chessIndexedNormals[i].size() * sizeof(glm::vec3),
+                         &chessIndexedNormals[i][0], GL_STATIC_DRAW);
+
+            glGenBuffers(1, &rookElementBuffer);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, rookElementBuffer);
+            glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+                         chessIndices[i].size() * sizeof(unsigned short),
+                         &chessIndices[i][0], GL_STATIC_DRAW);
+        }
+        // ! TO DELETE
+        // glGenBuffers(1, &chessVertexBuffers[i]);
+        // glBindBuffer(GL_ARRAY_BUFFER, chessVertexBuffers[i]);
+        // glBufferData(GL_ARRAY_BUFFER,
+        //              chessIndexedVertices[i].size() * sizeof(glm::vec3),
+        //              &chessIndexedVertices[i][0], GL_STATIC_DRAW);
+
+        // glGenBuffers(1, &chessUvBuffers[i]);
+        // glBindBuffer(GL_ARRAY_BUFFER, chessUvBuffers[i]);
+        // glBufferData(GL_ARRAY_BUFFER,
+        //              chessIndexedUvs[i].size() * sizeof(glm::vec2),
+        //              &chessIndexedUvs[i][0], GL_STATIC_DRAW);
+
+        // glGenBuffers(1, &chessNomralBuffers[i]);
+        // glBindBuffer(GL_ARRAY_BUFFER, chessNomralBuffers[i]);
+        // glBufferData(GL_ARRAY_BUFFER,
+        //              chessIndexedNormals[i].size() * sizeof(glm::vec3),
+        //              &chessIndexedNormals[i][0], GL_STATIC_DRAW);
+
+        // glGenBuffers(1, &chessElementBuffers[i]);
+        // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
+        // glBufferData(GL_ELEMENT_ARRAY_BUFFER,
+        //              chessIndices[i].size() * sizeof(unsigned short),
+        //              &chessIndices[i][0], GL_STATIC_DRAW);
     }
 
     GLuint Texture2 = loadBMP_custom("Chess_New/wooddar3.bmp");
@@ -334,21 +500,22 @@ int main(void)
 
         // *********************************************************************************
         // * THE CHESS MESHES
-        // TODO: +z towards bottom +x towards right
 
         double scaleFactor2 = 0.002;
         glm::mat4 ModelMatrix2 =
             glm::scale(glm::mat4(1.0),
                        glm::vec3(scaleFactor2, scaleFactor2, scaleFactor2));
-        // * First We need to translate towards -y and -z
+        // * First We need to translate towards -y and -z to put it ON board
         ModelMatrix2 =
             glm::translate(ModelMatrix2, glm::vec3(0.0f, -100.0f, -100.0f));
 
         // * Then we do the rotation Now queen is located at the middle to
-        // the
-        // * left
+        // * the left
         ModelMatrix2 = glm::rotate(ModelMatrix2, glm::radians(90.0f),
                                    glm::vec3(1.0f, 0.0f, 0.0f));
+
+        // TODO: +z towards bottom +x towards right
+
         for (int i = 0; i < 12; i += 2)
         {
 
