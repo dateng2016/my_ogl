@@ -218,7 +218,7 @@ int main(void)
 
     // ***********************
 
-    // TODO: Assigning accordingly
+    // Assigning accordingly
     // 0 -> Bishop
     // 2 -> Knight
     // 4 -> Pawn (The smallest one)
@@ -409,8 +409,6 @@ int main(void)
     GLuint Texture2 = loadBMP_custom("Chess_New/wooddar3.bmp");
     // Get a handle for our "myTextureSampler" uniform
     GLuint TextureID2 = glGetUniformLocation(programID, "myTextureSampler");
-
-    //  **********************************************************
 
     // Get a handle for our "LightPosition" uniform
     glUseProgram(programID);

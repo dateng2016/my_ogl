@@ -25,7 +25,7 @@ glm::mat4 getProjectionMatrix()
 }
 
 // Initial position : on +Z
-glm::vec3 position = glm::vec3(0, 0, 5);
+glm::vec3 position = glm::vec3(0, 100, 5);
 // Initial horizontal angle : toward -Z
 float horizontalAngle = 3.14f;
 // Initial vertical angle : none
@@ -35,6 +35,12 @@ float initialFoV = 45.0f;
 
 float speed = 3.0f; // 3 units / second
 float mouseSpeed = 0.005f;
+
+// ********************
+float radius = 5.0f;
+float theta = glm::radians(90.0f);
+float phi = 0.0f;
+float x_pos, y_pos, z_pos;
 
 void computeMatricesFromInputs()
 {
@@ -69,26 +75,43 @@ void computeMatricesFromInputs()
     // Up vector
     glm::vec3 up = glm::cross(right, direction);
 
-    // Move forward
-    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
     {
-        position += direction * deltaTime * speed;
-    }
-    // Move backward
-    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
-    {
-        position -= direction * deltaTime * speed;
-    }
-    // Strafe right
-    if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
-    {
-        position += right * deltaTime * speed;
+        // position += right * deltaTime * speed;
+        phi += 0.01;
     }
     // Strafe left
-    if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+    if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
     {
-        position -= right * deltaTime * speed;
+        // position -= right * deltaTime * speed;
+        phi -= 0.01;
     }
+    if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+    {
+        // position -= right * deltaTime * speed;
+        theta += 0.01;
+    }
+    if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+    {
+        // position -= right * deltaTime * speed;
+        theta -= 0.01;
+    }
+    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+    {
+        // position -= right * deltaTime * speed;
+        radius -= 0.05;
+    }
+    if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+    {
+        // position -= right * deltaTime * speed;
+        radius += 0.05;
+    }
+
+    // ********************
+    x_pos = radius * sin(theta) * cos(phi);
+    y_pos = radius * sin(theta) * sin(phi);
+    z_pos = radius * cos(theta);
+    position = glm::vec3(x_pos, y_pos, z_pos);
 
     float FoV =
         initialFoV; // - 5 * glfwGetMouseWheel(); // Now GLFW 3 requires setting
