@@ -205,10 +205,13 @@ int main(void)
         kingNormalBuffer, queenNormalBuffer, rookNormalBuffer,
         bishopElementBuffer, knightElementBuffer, pawnElementBuffer,
         kingElementBuffer, queenElementBuffer, rookElementBuffer;
+    vector<unsigned short> bishopIndices, knightIndices, pawnIndices,
+        kingIndices, queenIndices, rookIndices;
     for (int i = 0; i < 12; i += 2)
     {
         if (i == 0)
         {
+            bishopIndices = chessIndices[i];
             // This is Bishop
             glGenBuffers(1, &bishopVertexBuffer);
             glBindBuffer(GL_ARRAY_BUFFER, bishopVertexBuffer);
@@ -236,6 +239,7 @@ int main(void)
         }
         if (i == 2)
         {
+            knightIndices = chessIndices[i];
             // This is knight
             glGenBuffers(1, &knightVertexBuffer);
             glBindBuffer(GL_ARRAY_BUFFER, knightVertexBuffer);
@@ -263,6 +267,7 @@ int main(void)
         }
         if (i == 4)
         {
+            pawnIndices = chessIndices[i];
             // This is pawn
             glGenBuffers(1, &pawnVertexBuffer);
             glBindBuffer(GL_ARRAY_BUFFER, pawnVertexBuffer);
@@ -290,6 +295,7 @@ int main(void)
         }
         if (i == 6)
         {
+            kingIndices = chessIndices[i];
             // This is king
             glGenBuffers(1, &kingVertexBuffer);
             glBindBuffer(GL_ARRAY_BUFFER, kingVertexBuffer);
@@ -317,6 +323,7 @@ int main(void)
         }
         if (i == 8)
         {
+            queenIndices = chessIndices[i];
             // This is queen
             glGenBuffers(1, &queenVertexBuffer);
             glBindBuffer(GL_ARRAY_BUFFER, queenVertexBuffer);
@@ -344,6 +351,7 @@ int main(void)
         }
         if (i == 10)
         {
+            rookIndices = chessIndices[i];
             // This is rook
             glGenBuffers(1, &rookVertexBuffer);
             glBindBuffer(GL_ARRAY_BUFFER, rookVertexBuffer);
@@ -535,21 +543,38 @@ int main(void)
             glUniform1i(TextureID2, 0); // Set the sampler to use Texture Unit 0
 
             // Bind buffers and draw the second object
-            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
+            glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, kingElementBuffer);
             // Set attribute pointers for the second object
             glEnableVertexAttribArray(0);
-            glBindBuffer(GL_ARRAY_BUFFER, chessVertexBuffers[i]);
+            glBindBuffer(GL_ARRAY_BUFFER, kingVertexBuffer);
             glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
             glEnableVertexAttribArray(1);
-            glBindBuffer(GL_ARRAY_BUFFER, chessUvBuffers[i]);
+            glBindBuffer(GL_ARRAY_BUFFER, kingUvBuffer);
             glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
 
             glEnableVertexAttribArray(2);
-            glBindBuffer(GL_ARRAY_BUFFER, chessNomralBuffers[i]);
+            glBindBuffer(GL_ARRAY_BUFFER, kingNormalBuffer);
             glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
             glDrawElements(GL_TRIANGLES, chessIndices[i].size(),
                            GL_UNSIGNED_SHORT, (void*)0);
+            // !TO DELETE
+            // // Bind buffers and draw the second object
+            // glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, chessElementBuffers[i]);
+            // // Set attribute pointers for the second object
+            // glEnableVertexAttribArray(0);
+            // glBindBuffer(GL_ARRAY_BUFFER, chessVertexBuffers[i]);
+            // glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+            // glEnableVertexAttribArray(1);
+            // glBindBuffer(GL_ARRAY_BUFFER, chessUvBuffers[i]);
+            // glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 0, (void*)0);
+
+            // glEnableVertexAttribArray(2);
+            // glBindBuffer(GL_ARRAY_BUFFER, chessNomralBuffers[i]);
+            // glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+            // glDrawElements(GL_TRIANGLES, chessIndices[i].size(),
+            //                GL_UNSIGNED_SHORT, (void*)0);
         }
 
         // *********************************************************************************
