@@ -189,6 +189,19 @@ int main(void)
         chessNomralBuffers.push_back(chessUvBuffer);
         chessElementBuffers.push_back(chessElementBuffer);
     }
+
+    // TODO: Assigning accordingly
+    // 0 -> Bishop
+    // 2 -> Knight
+    // 4 -> Pawn (The smallest one)
+    // 6 -> King
+    // 8 -> Queen
+    // 10 -> Rook
+    GLuint bishopBuffer, knightBuffer, pawnBuffer, kingBuffer, queenBuffer,
+        rookBuffer, bishopBuffer, knightBuffer, pawnBuffer, kingBuffer,
+        queenBuffer, rookBuffer, bishopBuffer, knightBuffer, pawnBuffer,
+        kingBuffer, queenBuffer, rookBuffer, bishopBuffer, knightBuffer,
+        pawnBuffer, kingBuffer, queenBuffer, rookBuffer;
     for (int i = 0; i < 12; i++)
     {
         glGenBuffers(1, &chessVertexBuffers[i]);
