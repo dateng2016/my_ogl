@@ -566,7 +566,7 @@ int main(void)
 
         // TODO: +z towards bottom +x towards right ONE grid is about 275
         // float oneGridLength = 275.0f;
-        // * KING
+        // * Render KING
 
         render(-2, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, kingElementBuffer, kingVertexBuffer,
@@ -574,6 +574,13 @@ int main(void)
         render(-2, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, kingElementBuffer, kingVertexBuffer,
                kingUvBuffer, kingNormalBuffer, kingIndices);
+        // * Render QUEEN
+        render(-1, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, queenElementBuffer, queenVertexBuffer,
+               queenUvBuffer, queenNormalBuffer, queenIndices);
+        render(-1, 5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, queenElementBuffer, queenVertexBuffer,
+               queenUvBuffer, queenNormalBuffer, queenIndices);
 
         // ! TO DELETE
         // glm::mat4 kingModelMatrix1 =
