@@ -596,24 +596,15 @@ int main(void)
                bishopUvBuffer, bishopNormalBuffer, bishopIndices);
 
         // * Render KNIGHT
-
-        // This one needs rotationx
-        render(-1, 2,
-               glm::rotate(ModelMatrix2, glm::radians(180.0f),
-                           glm::vec3(0.0f, 1.0f, 0.0f)),
-               MatrixID, ModelMatrixID, ViewMatrixID, Texture2, TextureID2,
-               knightElementBuffer, knightVertexBuffer, knightUvBuffer,
-               knightNormalBuffer, knightIndices);
+        render(-1, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
+               knightUvBuffer, knightNormalBuffer, knightIndices);
         render(-1, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
                knightUvBuffer, knightNormalBuffer, knightIndices);
-        // This one needs rotation
-        render(4, 2,
-               glm::rotate(ModelMatrix2, glm::radians(180.0f),
-                           glm::vec3(0.0f, 1.0f, 0.0f)),
-               MatrixID, ModelMatrixID, ViewMatrixID, Texture2, TextureID2,
-               knightElementBuffer, knightVertexBuffer, knightUvBuffer,
-               knightNormalBuffer, knightIndices);
+        render(4, 2, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
+               knightUvBuffer, knightNormalBuffer, knightIndices);
         render(4, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, knightElementBuffer, knightVertexBuffer,
                knightUvBuffer, knightNormalBuffer, knightIndices);
@@ -630,7 +621,10 @@ int main(void)
         render(6, -5, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
                Texture2, TextureID2, rookElementBuffer, rookVertexBuffer,
                rookUvBuffer, rookNormalBuffer, rookIndices);
-
+        // * Render PAWN
+        render(0, 0, ModelMatrix2, MatrixID, ModelMatrixID, ViewMatrixID,
+               Texture2, TextureID2, pawnElementBuffer, pawnVertexBuffer,
+               pawnUvBuffer, pawnNormalBuffer, pawnIndices);
         // ! TO DELETE
         // glm::mat4 kingModelMatrix1 =
         //     glm::translate(ModelMatrix2, glm::vec3(-2 * oneGridLength,
